@@ -1,0 +1,93 @@
+$(document).ready(function(){
+
+$("#buttonSubmit").on("click",function(){
+
+   var checkin = $("#checkin").val();
+   var checkout = $("#checkout").val();
+   var norooms = $("#norooms").val();
+   var noguest = $("#noguest").val();
+   var pname  =  $("#pname").val();
+   var phone  =  $("#phone").val();
+   var email  =  $("#email").val();
+   var message = "Checkin Date : " + checkin + "\n Checkout Date :" + checkout + "\n Number Of Rooms : " + norooms + "\n Number Of Guests : " + noguest + "\n Person Name : " + pname + "\n Email : " + email + "\n Phone Number : " +  phone;
+   var error = 0;
+   var msg ='<li>Please fill the following values</li>';
+
+   if(checkin =='') {
+       error = 1;
+       msg+= "<li>Checkin Date</li>";
+   }
+
+   if(checkout =='') {
+       error = 1;
+       msg+= "<li>CheckOut Date</li>";
+   }
+
+   if(checkout < checkin){
+       error = 1;
+       msg+= "<li>CheckOut Date must be after the checkin date.</li>";
+
+   }
+
+   if(norooms =='' || norooms == 0 ) {
+       error = 1;
+       msg+= "<li>Number of Rooms</li>";
+   }
+
+   if(noguest =='' || noguest == 0 ) {
+       error = 1;
+       msg+="<li>Number of guests</li>";
+   }
+
+   if(pname =='')  {
+       error = 1;
+       msg+= "<li>Person Name</li>";
+   }
+   if(phone =='') {
+       error = 1;
+       msg+="<li>Phone Number</li>";
+   }
+
+
+   if(!ValidateEmail(email))
+   {
+       msg+= "<li>Not a valid e-mail address</li>";
+       error = 1;
+   }
+
+
+   if( error == 0){
+
+       ajaxCalling(message,email);
+
+
+   }else{
+       $("#errorMsg").html("<ul>"+ msg + "</ul>");
+   }
+
+});
+
+});
+
+
+function ValidateEmail(email) {
+    var expr = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return expr.test(email);
+}
+
+
+function ajaxCalling(msg,customeremail){
+    jQuery.ajax({
+        url: 'sendemail.php',
+        type: 'POST',
+        data:{customeremail:customeremail,message : msg} ,
+        success: function (response) {
+            //console.log(response);
+            $("#errorMsg").html(response);
+        },
+        error: function () {
+           console.log("error");
+        }
+    });
+
+}

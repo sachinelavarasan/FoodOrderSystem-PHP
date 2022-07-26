@@ -1,0 +1,35 @@
+form
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	height: 100vh;
+}
+h1
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	height: 100vh;
+}
+fieldset
+{
+	padding: 30px;
+	
+}
+button
+{
+	text-align: center;
+	background-color:green;
+	border:green;
+	color:white;
+	padding: 5px;
+	margin-left: 70px;
+}
+label
+{
+	color:black;
+	font-size:18px;
+}
